@@ -2,6 +2,45 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { google } from 'googleapis';
 
+async function scrapeEscambia() {
+  const res = await axios.get('https://www.applitrack.com/escambia/onlineapp/');
+  const $ = cheerio.load(res.data);
+  const jobs = [];
+  $('a.joblink').each((_, el) => {
+    const title = $(el).text().trim();
+    const href = $(el).attr('href');
+    const link = href.startsWith('http') ? href : `https://www.applitrack.com${href}`;
+    jobs.push(`${title} - ${link}`);
+  });
+  return jobs;
+}
+
+async function scrapeOkaloosa() {
+  const res = await axios.get('https://www.applitrack.com/okaloosa/onlineapp/');
+  const $ = cheerio.load(res.data);
+  const jobs = [];
+  $('a.joblink').each((_, el) => {
+    const title = $(el).text().trim();
+    const href = $(el).attr('href');
+    const link = href.startsWith('http') ? href : `https://www.applitrack.com${href}`;
+    jobs.push(`${title} - ${link}`);
+  });
+  return jobs;
+}
+
+async function scrapeSantaRosa() {
+  const res = await axios.get('https://www.applitrack.com/santarosa/onlineapp/');
+  const $ = cheerio.load(res.data);
+  const jobs = [];
+  $('a.joblink').each((_, el) => {
+    const title = $(el).text().trim();
+    const href = $(el).attr('href');
+    const link = href.startsWith('http') ? href : `https://www.applitrack.com${href}`;
+    jobs.push(`${title} - ${link}`);
+  });
+  return jobs;
+}
+
 const DOC_ID = 'YOUR_GOOGLE_DOC_ID'; // Replace with your real Google Doc ID
 const CREDENTIALS = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 
@@ -53,37 +92,41 @@ async function updateGoogleDoc() {
     },
   });
 
-  // Build the batch insert
-  const requests = [];
+ const districtSites = [
+  { name: 'Escambia County Schools', fn: scrapeEscambia },
+  { name: 'Okaloosa County Schools', fn: scrapeOkaloosa },
+  { name: 'Santa Rosa County Schools', fn: scrapeSantaRosa },
+];
 
-  for (const title of jobTitles) {
-    const jobs = await fetchJobs(title);
+for (const site of districtSites) {
+  const jobs = await site.fn();
 
-    // Add section header
+  requests.push({
+    insertText: {
+      location: { index: 1 },
+      text: `\n\n🏫 ${site.name} Job Listings\n-------------------------\n`
+    }
+  });
+
+  if (jobs.length === 0) {
     requests.push({
       insertText: {
         location: { index: 1 },
-        text: `\n\n📌 ${title} Jobs\n----------------------\n`
+        text: '❌ No job listings found.\n'
       }
     });
-
-    if (jobs.length === 0) {
+  } else {
+    for (const job of jobs.reverse()) {
       requests.push({
         insertText: {
           location: { index: 1 },
-          text: '❌ No jobs found.\n'
+          text: `- ${job}\n`
         }
       });
-    } else {
-      for (const job of jobs.reverse()) {
-        requests.push({
-          insertText: {
-            location: { index: 1 },
-            text: `- ${job}\n`
-          }
-        });
-      }
     }
+  }
+}
+   }
   }
 
   await docs.documents.batchUpdate({
