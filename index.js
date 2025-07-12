@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { google } from 'googleapis';
 
 const DOC_ID = 'YOUR_GOOGLE_DOC_ID';
