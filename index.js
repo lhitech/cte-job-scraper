@@ -10,10 +10,7 @@ const CREDENTIALS = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 // ----------------------------
 const jobTitles = [
   'Career and Technical Education',
-  'Technical Instructor',
-  'Welding',
-  'Health Science',
-  'STEM'
+  'Director'
 ];
 
 async function fetchStateJobs(searchTerm) {
@@ -112,9 +109,7 @@ async function updateGoogleDoc() {
 
   // Section 2: School Districts
   const districtSites = [
-    { name: 'Escambia County Schools', id: 'escambia' },
-    { name: 'Okaloosa County Schools', id: 'okaloosa' },
-    { name: 'Santa Rosa County Schools', id: 'santarosa' }
+    { name: 'Escambia County Schools', id: 'escambia' }
   ];
 
   for (const site of districtSites) {
