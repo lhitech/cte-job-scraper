@@ -100,10 +100,11 @@ await docs.documents.batchUpdate({
         range: {
           startIndex: 1,
           endIndex: endIndex,
+       },
         },
-      }],
-    },
-  },
+      }
+    ]
+  }
 });
 
 
