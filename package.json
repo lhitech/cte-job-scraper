@@ -1,0 +1,11 @@
+{
+  "name": "cte-job-scraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "googleapis": "^133.0.0"
+  }
+}
