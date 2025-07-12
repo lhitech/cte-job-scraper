@@ -88,20 +88,24 @@ async function updateGoogleDoc() {
   const client = await auth.getClient();
   const docs = google.docs({ version: 'v1', auth: client });
 
-  // Clear existing content
-  await docs.documents.batchUpdate({
-    documentId: DOC_ID,
-    requestBody: {
-      requests: [{
-        deleteContentRange: {
-          range: {
-            startIndex: 1,
-            endIndex: 99999,
-          },
+ // Get current document to determine length
+const doc = await docs.documents.get({ documentId: DOC_ID });
+const endIndex = doc.data.body.content.slice(-1)[0].endIndex || 1;
+
+await docs.documents.batchUpdate({
+  documentId: DOC_ID,
+  requestBody: {
+    requests: [{
+      deleteContentRange: {
+        range: {
+          startIndex: 1,
+          endIndex: endIndex,
         },
       }],
     },
-  });
+  },
+});
+
 
   const requests = [];
 
