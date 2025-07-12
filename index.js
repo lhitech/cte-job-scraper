@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { google } from 'googleapis';
 
-const DOC_ID = 'YOUR_GOOGLE_DOC_ID'; // Replace with your actual Google Doc ID
+const DOC_ID = '1Tr9XsMrJRw4_5RRXfwiVvO_EN9-9UXzXbs1lxAwZgMU'; // Replace with your actual Google Doc ID
 const CREDENTIALS = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 
 // ----------------------------------------
