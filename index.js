@@ -90,7 +90,7 @@ async function updateGoogleDoc() {
 
  // Get current document to determine length
 const doc = await docs.documents.get({ documentId: DOC_ID });
-const endIndex = doc.data.body.content.slice(-1)[0].endIndex || 1;
+let endIndex = doc.data.body.content.slice(-1)[0].endIndex || 1;
 
   // Avoid deleting the trailing newline
 if (endIndex > 1) {
