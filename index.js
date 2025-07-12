@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { google } from 'googleapis';
 
-const DOC_ID = 'YOUR_GOOGLE_DOC_ID'; // Replace with your actual Doc ID
+const DOC_ID = '1qjf7xW0CN7d0xAoGB0yR7UdlBl55xlYt3IxJm136UbI'; // Replace with your actual Doc ID
 
 // Load and parse the service account credentials from the GitHub secret
 const CREDENTIALS = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
