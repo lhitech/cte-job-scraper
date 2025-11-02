@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { google } from 'googleapis';
 
-const DOC_ID = '1qjf7xW0CN7d0xAoGB0yR7UdlBl55xlYt3IxJm136UbI'; // 🔁 Replace with your actual Google Doc ID
+const DOC_ID = '1qjf7xW0CN7d0xAoGB0yR7UdlBl55xlYt3IxJm136UbI'; 
 const CREDENTIALS = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 
 // ----------------------------
@@ -117,6 +117,7 @@ async function updateGoogleDoc() {
 
     requests.push({
       insertText: {
+        date: {'11/2/2025'},
         location: { index: 1 },
         text: `\n\n🏫 ${site.name} Job Listings\n-------------------------\n`
       }
@@ -150,9 +151,6 @@ async function updateGoogleDoc() {
   console.log('✅ Google Doc updated with job listings.');
 }
 
-// ----------------------------
-// 🏁 Run the update
-// ----------------------------
 updateGoogleDoc().catch((err) => {
   console.error('❌ Error updating doc:', err.message);
   process.exit(1);
