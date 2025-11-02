@@ -84,7 +84,7 @@ async function updateGoogleDoc() {
     requests.push({
       insertText: {
         location: { index: 1 },
-        text: `\n\n📌 ${title} Jobs (MyFloridaJobs)\n----------------------\n`
+        text: `11/2/2025\n\n📌 ${title} Jobs (MyFloridaJobs)\n----------------------\n`
       }
     });
 
@@ -117,7 +117,6 @@ async function updateGoogleDoc() {
 
     requests.push({
       insertText: {
-        date: {'11/2/2025'},
         location: { index: 1 },
         text: `\n\n🏫 ${site.name} Job Listings\n-------------------------\n`
       }
